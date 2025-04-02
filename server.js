@@ -1,14 +1,21 @@
-import fs from "fs";
+import fs from "fs"; 
 import path from "path";
 import express from "express";
 import cors from "cors";
 
 const app = express();
-const PORT = process.env.PORT || 3000; // Use environment variable for Render
-const COMMENTS_FILE = path.join(process.cwd(), "public", "json", "comments.json");
+const PORT = process.env.PORT || 3000; // Use dynamic port for deployment
+const COMMENTS_FILE = path.join(process.cwd(), "src/public", "json", "comments.json");
+
+// ✅ Allow requests from your Netlify frontend
+const corsOptions = {
+    origin: ["https://sleepoutsideteam00.netlify.app", "https://deploy-preview-19--sleepoutsideteam00.netlify.app"], // Add more if needed
+    methods: "GET,POST,OPTIONS",
+    allowedHeaders: "Content-Type",
+};
 
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Ensure "public/json" directory exists
@@ -51,12 +58,7 @@ app.post("/comments/:productId", (req, res) => {
     res.status(201).json(newComment);
 });
 
-// Home route (for testing)
-app.get("/", (req, res) => {
-    res.send("Backend is working!");
-});
-
 // Start server
 app.listen(PORT, () => {
-    console.log(`✅ Server running on port ${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
