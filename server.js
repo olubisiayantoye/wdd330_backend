@@ -5,7 +5,7 @@ import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 3000; // Use dynamic port for deployment
-const COMMENTS_FILE = path.join(process.cwd(), "src/public", "json", "comments.json");
+const COMMENTS_FILE = path.join(process.cwd(), "public", "json", "comments.json");
 
 // ✅ Allow requests from your Netlify frontend
 const corsOptions = {
